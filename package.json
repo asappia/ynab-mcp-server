@@ -27,7 +27,7 @@
     "@modelcontextprotocol/sdk": "1.18.0",
     "axios": "^1.8.4",
     "commander": "^14.0.1",
-    "ynab": "^2.9.0",
+    "ynab": "^4.1.0",
     "zod": "^3.23.8"
   },
   "devDependencies": {

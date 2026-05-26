@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
-import * as ynab from "ynab";
+import { createYnabClient } from "./tools/ynabClient.js";
 
 import * as ListBudgetsTool from "./tools/ListBudgetsTool.js";
 import * as GetUserTool from "./tools/GetUserTool.js";
@@ -40,13 +40,21 @@ import * as ListMonthsTool from "./tools/ListMonthsTool.js";
 import * as ListPayeeLocationsTool from "./tools/ListPayeeLocationsTool.js";
 import * as GetPayeeLocationTool from "./tools/GetPayeeLocationTool.js";
 import * as ListPayeeLocationsByPayeeTool from "./tools/ListPayeeLocationsByPayeeTool.js";
+import * as CreateCategoryTool from "./tools/CreateCategoryTool.js";
+import * as CreateCategoryGroupTool from "./tools/CreateCategoryGroupTool.js";
+import * as UpdateCategoryGroupTool from "./tools/UpdateCategoryGroupTool.js";
+import * as CreatePayeeTool from "./tools/CreatePayeeTool.js";
+import * as ListMoneyMovementsTool from "./tools/ListMoneyMovementsTool.js";
+import * as ListMoneyMovementsByMonthTool from "./tools/ListMoneyMovementsByMonthTool.js";
+import * as ListMoneyMovementGroupsTool from "./tools/ListMoneyMovementGroupsTool.js";
+import * as ListMoneyMovementGroupsByMonthTool from "./tools/ListMoneyMovementGroupsByMonthTool.js";
 
 const server = new McpServer({
   name: "ynab-mcp-server",
   version: "0.2.0",
 });
 
-const api = new ynab.API(process.env.YNAB_API_TOKEN || "");
+const api = createYnabClient(process.env.YNAB_API_TOKEN || "");
 
 server.registerTool(ListBudgetsTool.name, {
   title: "List Budgets",
@@ -269,6 +277,54 @@ server.registerTool(ListPayeeLocationsByPayeeTool.name, {
   description: ListPayeeLocationsByPayeeTool.description,
   inputSchema: ListPayeeLocationsByPayeeTool.inputSchema,
 }, async (input) => ListPayeeLocationsByPayeeTool.execute(input, api));
+
+server.registerTool(CreateCategoryTool.name, {
+  title: "Create Category",
+  description: CreateCategoryTool.description,
+  inputSchema: CreateCategoryTool.inputSchema,
+}, async (input) => CreateCategoryTool.execute(input, api));
+
+server.registerTool(CreateCategoryGroupTool.name, {
+  title: "Create Category Group",
+  description: CreateCategoryGroupTool.description,
+  inputSchema: CreateCategoryGroupTool.inputSchema,
+}, async (input) => CreateCategoryGroupTool.execute(input, api));
+
+server.registerTool(UpdateCategoryGroupTool.name, {
+  title: "Update Category Group",
+  description: UpdateCategoryGroupTool.description,
+  inputSchema: UpdateCategoryGroupTool.inputSchema,
+}, async (input) => UpdateCategoryGroupTool.execute(input, api));
+
+server.registerTool(CreatePayeeTool.name, {
+  title: "Create Payee",
+  description: CreatePayeeTool.description,
+  inputSchema: CreatePayeeTool.inputSchema,
+}, async (input) => CreatePayeeTool.execute(input, api));
+
+server.registerTool(ListMoneyMovementsTool.name, {
+  title: "List Money Movements",
+  description: ListMoneyMovementsTool.description,
+  inputSchema: ListMoneyMovementsTool.inputSchema,
+}, async (input) => ListMoneyMovementsTool.execute(input, api));
+
+server.registerTool(ListMoneyMovementsByMonthTool.name, {
+  title: "List Money Movements By Month",
+  description: ListMoneyMovementsByMonthTool.description,
+  inputSchema: ListMoneyMovementsByMonthTool.inputSchema,
+}, async (input) => ListMoneyMovementsByMonthTool.execute(input, api));
+
+server.registerTool(ListMoneyMovementGroupsTool.name, {
+  title: "List Money Movement Groups",
+  description: ListMoneyMovementGroupsTool.description,
+  inputSchema: ListMoneyMovementGroupsTool.inputSchema,
+}, async (input) => ListMoneyMovementGroupsTool.execute(input, api));
+
+server.registerTool(ListMoneyMovementGroupsByMonthTool.name, {
+  title: "List Money Movement Groups By Month",
+  description: ListMoneyMovementGroupsByMonthTool.description,
+  inputSchema: ListMoneyMovementGroupsByMonthTool.inputSchema,
+}, async (input) => ListMoneyMovementGroupsByMonthTool.execute(input, api));
 
 async function main() {
   const transport = new StdioServerTransport();

@@ -8,15 +8,8 @@ const accountTypeSchema = z.enum([
   "savings",
   "cash",
   "creditCard",
-  "lineOfCredit",
   "otherAsset",
   "otherLiability",
-  "mortgage",
-  "autoLoan",
-  "studentLoan",
-  "personalLoan",
-  "medicalDebt",
-  "otherDebt",
 ]);
 
 export const name = "ynab_create_account";
@@ -41,7 +34,7 @@ export async function execute(input: CreateAccountInput, api: ynab.API) {
     const response = await api.accounts.createAccount(budgetId, {
       account: {
         name: input.name,
-        type: input.type as ynab.AccountType,
+        type: input.type as ynab.SaveAccountType,
         balance: dollarsToMilliunits(input.balance),
       },
     });

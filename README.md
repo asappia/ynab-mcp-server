@@ -38,23 +38,25 @@ tool first, this prompt should happen asking you to set your default budget.
 
 ## Available MCP tools
 
-The server exposes **40 tools** covering the YNAB SDK v2.9.0 API (`ynab@^2.9.0`):
+The server exposes **45 tools** covering the current YNAB API via **`ynab@^4.1.0`**. Tool names still say “budget” for compatibility; the API uses “plan” (same ID as your `YNAB_BUDGET_ID`).
 
 | Tool | Description |
 |------|-------------|
-| `ynab_list_budgets` | List budgets (optional account summaries) |
+| `ynab_list_budgets` | List plans/budgets (optional account summaries) |
 | `ynab_get_user` | Authenticated user info |
-| `ynab_get_budget` | Full budget export |
-| `ynab_get_budget_settings` | Budget settings |
+| `ynab_get_budget` | Full plan export |
+| `ynab_get_budget_settings` | Plan settings |
 | `ynab_get_budget_month` | Single month (categories, RTA, age of money) |
-| `ynab_budget_summary` | Overspent categories and open accounts for a month |
-| `ynab_list_months` | List budget months |
+| `ynab_budget_summary` | Composite: overspent categories and open accounts |
+| `ynab_list_months` | List plan months |
 | `ynab_list_accounts` / `ynab_get_account` / `ynab_create_account` | Accounts |
 | `ynab_list_categories` / `ynab_get_category` / `ynab_get_month_category` | Categories |
-| `ynab_update_category_budget` | Set category budgeted amount for a month |
-| `ynab_update_category` | Update category metadata |
-| `ynab_list_payees` / `ynab_get_payee` / `ynab_update_payee` | Payees |
+| `ynab_create_category` / `ynab_create_category_group` / `ynab_update_category_group` | Category structure |
+| `ynab_update_category_budget` / `ynab_update_category` | Budget amounts and metadata |
+| `ynab_list_payees` / `ynab_get_payee` / `ynab_create_payee` / `ynab_update_payee` | Payees |
 | `ynab_list_payee_locations` / `ynab_get_payee_location` / `ynab_list_payee_locations_by_payee` | Payee locations |
+| `ynab_list_money_movements` / `ynab_list_money_movements_by_month` | Money movements |
+| `ynab_list_money_movement_groups` / `ynab_list_money_movement_groups_by_month` | Money movement groups |
 | `ynab_get_transactions` | List transactions (filters: month, account, category, payee, type) |
 | `ynab_get_transaction` / `ynab_create_transaction` / `ynab_create_transactions` | Single or bulk create |
 | `ynab_update_transaction` / `ynab_update_transactions` / `ynab_delete_transaction` | Update or delete |

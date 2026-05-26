@@ -16,7 +16,7 @@ interface GetBudgetSettingsInput {
 export async function execute(input: GetBudgetSettingsInput, api: ynab.API) {
   try {
     const budgetId = getBudgetId(input.budgetId);
-    const response = await api.budgets.getBudgetSettingsById(budgetId);
+    const response = await api.plans.getPlanSettingsById(budgetId);
     return {
       content: [{ type: "text" as const, text: JSON.stringify(response.data, null, 2) }],
     };

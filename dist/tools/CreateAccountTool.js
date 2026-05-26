@@ -6,15 +6,8 @@ const accountTypeSchema = z.enum([
     "savings",
     "cash",
     "creditCard",
-    "lineOfCredit",
     "otherAsset",
     "otherLiability",
-    "mortgage",
-    "autoLoan",
-    "studentLoan",
-    "personalLoan",
-    "medicalDebt",
-    "otherDebt",
 ]);
 export const name = "ynab_create_account";
 export const description = "Creates a new account in a budget.";

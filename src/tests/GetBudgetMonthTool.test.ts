@@ -6,14 +6,14 @@ describe('GetBudgetMonthTool', () => {
   let mockApi: any;
   beforeEach(() => {
     vi.clearAllMocks();
-    mockApi = { months: { getBudgetMonth: vi.fn() } };
+    mockApi = { months: { getPlanMonth: vi.fn() } };
     (ynab.API as any).mockImplementation(() => mockApi);
     process.env.YNAB_BUDGET_ID = 'budget-1';
   });
   it('should call API successfully', async () => {
-    mockApi.months.getBudgetMonth.mockResolvedValue({ data: { ok: true } });
+    mockApi.months.getPlanMonth.mockResolvedValue({ data: { ok: true } });
     const result = await Tool.execute({ budgetId: 'budget-1', month: 'current' }, mockApi);
-    expect(mockApi.months.getBudgetMonth).toHaveBeenCalled();
+    expect(mockApi.months.getPlanMonth).toHaveBeenCalled();
     expect(result.content[0].text).toContain('ok');
   });
   it('should handle missing budget id', async () => {
