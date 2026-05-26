@@ -17,9 +17,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Docker image published via GitHub Actions to GHCR on push to `main` and version tags
 - `.dockerignore` and multi-stage `Dockerfile`
 
+### Fixed
+- Pin `@modelcontextprotocol/sdk` to 1.18.0; 1.29.x causes `tsc` to run out of memory in CI and Docker builds
+
 ### Changed
 - Refactored tools to use shared `getBudgetId` helper
-- GitHub Actions test workflow: coverage upload runs on Node 22.x matrix job
+- GitHub Actions test workflow: install with `--ignore-scripts`, explicit build step, coverage upload on Node 22.x
 
 ## [0.1.2] - 2024-03-26
 
