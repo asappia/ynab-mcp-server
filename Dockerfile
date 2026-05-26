@@ -22,7 +22,5 @@ COPY --from=builder /app/dist ./dist
 
 USER nodejs
 
-ENV YNAB_API_TOKEN=""
-ENV YNAB_BUDGET_ID=""
-
+# YNAB_API_TOKEN and YNAB_BUDGET_ID must be supplied at runtime (docker run -e / MCP client env).
 CMD ["node", "dist/index.js"]
