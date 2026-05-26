@@ -20,9 +20,11 @@
     "test:watch": "vitest watch",
     "test:coverage": "vitest run --coverage"
   },
+  "overrides": {
+    "glob": "^13.0.6"
+  },
   "dependencies": {
     "@modelcontextprotocol/sdk": "1.18.0",
-    "@types/axios": "^0.14.4",
     "axios": "^1.8.4",
     "commander": "^14.0.1",
     "ynab": "^2.9.0",

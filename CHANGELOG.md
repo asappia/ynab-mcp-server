@@ -19,6 +19,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 - Pin `@modelcontextprotocol/sdk` to 1.18.0; 1.29.x causes `tsc` to run out of memory in CI and Docker builds
+- Remove deprecated `@types/axios` (axios ships its own types)
+- Override transitive `glob` to 13.x (via `test-exclude` / Vitest coverage) to clear install deprecation warnings
 
 ### Changed
 - Refactored tools to use shared `getBudgetId` helper
