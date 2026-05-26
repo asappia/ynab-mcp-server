@@ -22,9 +22,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 - Pin `@modelcontextprotocol/sdk` to 1.18.0; 1.29.x causes `tsc` to run out of memory in CI and Docker builds
 - Remove deprecated `@types/axios` (axios ships its own types)
-- Override transitive `glob` to 13.x (via `test-exclude` / Vitest coverage) to clear install deprecation warnings
 
 ### Changed
+- Upgraded Vitest and `@vitest/coverage-v8` to **4.1.x**; coverage uses explicit `include`/`exclude` per Vitest 4
 - Upgraded from `ynab@2.9` to `ynab@4.1` (plans API naming; same UUIDs via `YNAB_BUDGET_ID`)
 - Refactored tools to use shared `getBudgetId` helper
 - GitHub Actions: Node 24–compatible action versions (`checkout@v5`, `setup-node@v5`, Docker actions v4–v7) and `FORCE_JAVASCRIPT_ACTIONS_TO_NODE24`
