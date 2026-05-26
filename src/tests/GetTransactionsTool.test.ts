@@ -11,6 +11,7 @@ describe('GetTransactionsTool', () => {
       getTransactionsByAccount: Mock;
       getTransactionsByCategory: Mock;
       getTransactionsByPayee: Mock;
+      getTransactionsByMonth: Mock;
     };
   };
 
@@ -23,6 +24,7 @@ describe('GetTransactionsTool', () => {
         getTransactionsByAccount: vi.fn(),
         getTransactionsByCategory: vi.fn(),
         getTransactionsByPayee: vi.fn(),
+        getTransactionsByMonth: vi.fn(),
       },
     };
 
@@ -175,6 +177,28 @@ describe('GetTransactionsTool', () => {
         undefined,
         undefined
       );
+    });
+
+    it('should get transactions by month', async () => {
+      mockApi.transactions.getTransactionsByMonth.mockResolvedValue({
+        data: { transactions: mockTransactionsData.filter((t) => !t.deleted) },
+      });
+
+      await GetTransactionsTool.execute(
+        {
+          budgetId: 'test-budget-id',
+          month: '2024-01-01',
+        },
+        mockApi as any
+      );
+
+      expect(mockApi.transactions.getTransactionsByMonth).toHaveBeenCalledWith(
+        'test-budget-id',
+        '2024-01-01',
+        undefined,
+        undefined
+      );
+      expect(mockApi.transactions.getTransactionsByAccount).not.toHaveBeenCalled();
     });
 
     it('should filter by sinceDate', async () => {

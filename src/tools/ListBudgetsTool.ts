@@ -4,9 +4,18 @@ import { getErrorMessage } from "./errorUtils.js";
 
 export const name = "ynab_list_budgets";
 export const description = "Lists all available budgets from YNAB API";
-export const inputSchema = {};
+export const inputSchema = {
+  includeAccounts: z
+    .boolean()
+    .optional()
+    .describe("Include account summaries in each budget (default: false)"),
+};
 
-export async function execute(_input: Record<string, unknown>, api: ynab.API) {
+interface ListBudgetsInput {
+  includeAccounts?: boolean;
+}
+
+export async function execute(input: ListBudgetsInput, api: ynab.API) {
   try {
     if (!process.env.YNAB_API_TOKEN) {
       return {
@@ -15,13 +24,19 @@ export async function execute(_input: Record<string, unknown>, api: ynab.API) {
     }
 
     console.error("Listing budgets");
-    const budgetsResponse = await api.budgets.getBudgets();
+    const budgetsResponse = await api.budgets.getBudgets(input.includeAccounts ?? false);
     console.error(`Found ${budgetsResponse.data.budgets.length} budgets`);
 
-    const budgets = budgetsResponse.data.budgets.map((budget) => ({
-      id: budget.id,
-      name: budget.name,
-    }));
+    const budgets = budgetsResponse.data.budgets.map((budget) => {
+      const summary: Record<string, unknown> = {
+        id: budget.id,
+        name: budget.name,
+      };
+      if ("accounts" in budget && budget.accounts) {
+        summary.accounts = budget.accounts;
+      }
+      return summary;
+    });
 
     return {
       content: [{ type: "text" as const, text: JSON.stringify(budgets, null, 2) }]

@@ -1,18 +1,12 @@
 import { z } from "zod";
 import { getErrorMessage } from "./errorUtils.js";
+import { getBudgetId } from "./budgetUtils.js";
 export const name = "ynab_list_accounts";
 export const description = "Lists all accounts in a budget. Useful for finding account IDs when creating transactions.";
 export const inputSchema = {
     budgetId: z.string().optional().describe("The ID of the budget (optional, defaults to YNAB_BUDGET_ID environment variable)"),
     includeClosedAccounts: z.boolean().optional().describe("Include closed accounts in the list (default: false)"),
 };
-function getBudgetId(inputBudgetId) {
-    const budgetId = inputBudgetId || process.env.YNAB_BUDGET_ID || "";
-    if (!budgetId) {
-        throw new Error("No budget ID provided. Please provide a budget ID or set the YNAB_BUDGET_ID environment variable.");
-    }
-    return budgetId;
-}
 export async function execute(input, api) {
     try {
         const budgetId = getBudgetId(input.budgetId);

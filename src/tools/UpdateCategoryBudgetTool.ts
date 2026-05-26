@@ -1,6 +1,7 @@
 import { z } from "zod";
 import * as ynab from "ynab";
 import { getErrorMessage } from "./errorUtils.js";
+import { getBudgetId } from "./budgetUtils.js";
 
 export const name = "ynab_update_category_budget";
 export const description = "Updates the budgeted amount for a category in a specific month. Use this to allocate funds to categories or move money between categories.";
@@ -18,13 +19,6 @@ interface UpdateCategoryBudgetInput {
   budgeted: number;
 }
 
-function getBudgetId(inputBudgetId?: string): string {
-  const budgetId = inputBudgetId || process.env.YNAB_BUDGET_ID || "";
-  if (!budgetId) {
-    throw new Error("No budget ID provided. Please provide a budget ID or set the YNAB_BUDGET_ID environment variable.");
-  }
-  return budgetId;
-}
 
 export async function execute(input: UpdateCategoryBudgetInput, api: ynab.API) {
   try {

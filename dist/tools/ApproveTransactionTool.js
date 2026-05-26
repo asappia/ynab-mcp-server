@@ -1,5 +1,6 @@
 import { z } from "zod";
 import { getErrorMessage } from "./errorUtils.js";
+import { getBudgetId } from "./budgetUtils.js";
 export const name = "ynab_approve_transaction";
 export const description = "Approves an existing transaction in your YNAB budget.";
 export const inputSchema = {
@@ -7,13 +8,6 @@ export const inputSchema = {
     transactionId: z.string().describe("The id of the transaction to approve"),
     approved: z.boolean().optional().default(true).describe("Whether the transaction should be marked as approved"),
 };
-function getBudgetId(inputBudgetId) {
-    const budgetId = inputBudgetId || process.env.YNAB_BUDGET_ID || "";
-    if (!budgetId) {
-        throw new Error("No budget ID provided. Please provide a budget ID or set the YNAB_BUDGET_ID environment variable.");
-    }
-    return budgetId;
-}
 export async function execute(input, api) {
     try {
         const budgetId = getBudgetId(input.budgetId);
