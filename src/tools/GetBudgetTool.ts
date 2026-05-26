@@ -5,7 +5,7 @@ import { getBudgetId } from "./budgetUtils.js";
 
 export const name = "ynab_get_budget";
 export const description =
-  "Returns a single budget with all related entities (full budget export). Amounts are in milliunits; divide by 1000 for dollars.";
+  "Returns a single budget with all related entities (full budget export — very large). Prefer ynab_get_budget_month with detail=summary or ynab_budget_summary. Amounts are in milliunits.";
 export const inputSchema = {
   budgetId: z.string().optional().describe("Budget ID (optional, defaults to YNAB_BUDGET_ID)"),
   lastKnowledgeOfServer: z

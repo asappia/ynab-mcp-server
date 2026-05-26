@@ -46,8 +46,8 @@ The server exposes **45 tools** covering the current YNAB API via **`ynab@^4.1.0
 | `ynab_get_user` | Authenticated user info |
 | `ynab_get_budget` | Full plan export |
 | `ynab_get_budget_settings` | Plan settings |
-| `ynab_get_budget_month` | Single month (categories, RTA, age of money) |
-| `ynab_budget_summary` | Composite: overspent categories and open accounts |
+| `ynab_get_budget_month` | Single month (`detail=summary` default: totals + overspent only; `compact`/`full` for more) |
+| `ynab_budget_summary` | Composite: compact month summary + open accounts (preferred for routine checks) |
 | `ynab_list_months` | List plan months |
 | `ynab_list_accounts` / `ynab_get_account` / `ynab_create_account` | Accounts |
 | `ynab_list_categories` / `ynab_get_category` / `ynab_get_month_category` | Categories |

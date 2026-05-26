@@ -132,9 +132,10 @@ describe('BudgetSummaryTool', () => {
       expect(mockApi.months.getPlanMonth).toHaveBeenCalledWith('test-budget-id', 'current');
 
       const parsedResult = JSON.parse(result.content[0].text);
-      expect(parsedResult).toHaveProperty('monthBudget');
+      expect(parsedResult).toHaveProperty('month');
+      expect(parsedResult.month).toHaveProperty('overspent');
       expect(parsedResult).toHaveProperty('accounts');
-      expect(parsedResult).toHaveProperty('note', 'Divide all numbers by 1000 to get the balance in dollars.');
+      expect(parsedResult).toHaveProperty('amountsNote');
 
       // Should only include non-deleted, non-closed accounts
       expect(parsedResult.accounts).toHaveLength(2);
@@ -281,7 +282,7 @@ describe('BudgetSummaryTool', () => {
   describe('tool configuration', () => {
     it('should have correct name and description', () => {
       expect(BudgetSummaryTool.name).toBe('ynab_budget_summary');
-      expect(BudgetSummaryTool.description).toContain('Get a summary of the budget for a specific month');
+      expect(BudgetSummaryTool.description).toContain('Compact month overview');
     });
 
     it('should have correct input schema', () => {
