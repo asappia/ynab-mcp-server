@@ -1,18 +1,12 @@
 import { z } from "zod";
 import { getErrorMessage } from "./errorUtils.js";
+import { getBudgetId } from "./budgetUtils.js";
 export const name = "ynab_bulk_approve_transactions";
 export const description = "Approves multiple transactions at once. Provide an array of transaction IDs to approve them all in a single API call.";
 export const inputSchema = {
     budgetId: z.string().optional().describe("The ID of the budget (optional, defaults to YNAB_BUDGET_ID environment variable)"),
     transactionIds: z.array(z.string()).describe("Array of transaction IDs to approve"),
 };
-function getBudgetId(inputBudgetId) {
-    const budgetId = inputBudgetId || process.env.YNAB_BUDGET_ID || "";
-    if (!budgetId) {
-        throw new Error("No budget ID provided. Please provide a budget ID or set the YNAB_BUDGET_ID environment variable.");
-    }
-    return budgetId;
-}
 export async function execute(input, api) {
     try {
         const budgetId = getBudgetId(input.budgetId);

@@ -36,24 +36,77 @@ tool first, this prompt should happen asking you to set your default budget.
 ### Check total monthly spending vs total income
 ### Auto-distribute ready to assign funds based on category targets
 
-## Current state
-Available tools:
-* ListBudgets - lists available budgets on your account
-* BudgetSummary - provides a summary of categories that are underfunded and accounts that are low
-* GetUnapprovedTransactions - retrieve all unapproved transactions
-* CreateTransaction - creates a transaction for a specified budget and account.
-  * example prompt: `Add a transaction to my Ally account for $3.98 I spent at REI today`
-  * requires GetBudget to be called first so we know the account id
-* ApproveTransaction - approves an existing transaction in your YNAB budget
-  * requires a transaction ID to approve
-  * can be used in conjunction with GetUnapprovedTransactions to approve pending transactions
-  * After calling get unapproved transactions, prompt: `approve the transaction for $6.95 on the Apple Card`
+## Available MCP tools
 
-Next:
-* be able to approve multiple transactions with 1 call
-* updateCategory tool - or updateTransaction more general tool if I can get optional parameters to work correctly with zod & mcp framework
-* move off of mcp framework to use the model context protocol sdk directly?
+The server exposes **40 tools** covering the YNAB SDK v2.9.0 API (`ynab@^2.9.0`):
 
+| Tool | Description |
+|------|-------------|
+| `ynab_list_budgets` | List budgets (optional account summaries) |
+| `ynab_get_user` | Authenticated user info |
+| `ynab_get_budget` | Full budget export |
+| `ynab_get_budget_settings` | Budget settings |
+| `ynab_get_budget_month` | Single month (categories, RTA, age of money) |
+| `ynab_budget_summary` | Overspent categories and open accounts for a month |
+| `ynab_list_months` | List budget months |
+| `ynab_list_accounts` / `ynab_get_account` / `ynab_create_account` | Accounts |
+| `ynab_list_categories` / `ynab_get_category` / `ynab_get_month_category` | Categories |
+| `ynab_update_category_budget` | Set category budgeted amount for a month |
+| `ynab_update_category` | Update category metadata |
+| `ynab_list_payees` / `ynab_get_payee` / `ynab_update_payee` | Payees |
+| `ynab_list_payee_locations` / `ynab_get_payee_location` / `ynab_list_payee_locations_by_payee` | Payee locations |
+| `ynab_get_transactions` | List transactions (filters: month, account, category, payee, type) |
+| `ynab_get_transaction` / `ynab_create_transaction` / `ynab_create_transactions` | Single or bulk create |
+| `ynab_update_transaction` / `ynab_update_transactions` / `ynab_delete_transaction` | Update or delete |
+| `ynab_get_unapproved_transactions` / `ynab_approve_transaction` / `ynab_bulk_approve_transactions` | Approval workflow |
+| `ynab_import_transactions` | Import from linked accounts |
+| `ynab_list_scheduled_transactions` / `ynab_get_scheduled_transaction` | Scheduled transactions |
+| `ynab_create_scheduled_transaction` / `ynab_update_scheduled_transaction` / `ynab_delete_scheduled_transaction` | Scheduled CRUD |
+
+Amounts returned from the raw API are in **milliunits** (divide by 1000 for dollars). Write tools that accept dollar amounts convert automatically.
+
+## Docker
+
+A Docker image is built on every push to `main` and published to GitHub Container Registry:
+
+```bash
+docker pull ghcr.io/calebl/ynab-mcp-server:latest
+```
+
+Replace `calebl` with your GitHub username or organization if you fork this repository.
+
+### Run locally
+
+```bash
+docker build -t ynab-mcp-server:local .
+export YNAB_API_TOKEN="your-token"
+export YNAB_BUDGET_ID="optional-budget-id"
+docker run -i --rm -e YNAB_API_TOKEN -e YNAB_BUDGET_ID ynab-mcp-server:local
+```
+
+### MCP client configuration (stdio via Docker)
+
+```json
+{
+  "mcpServers": {
+    "ynab-mcp-server": {
+      "command": "docker",
+      "args": [
+        "run", "-i", "--rm",
+        "-e", "YNAB_API_TOKEN",
+        "-e", "YNAB_BUDGET_ID",
+        "ghcr.io/calebl/ynab-mcp-server:latest"
+      ],
+      "env": {
+        "YNAB_API_TOKEN": "<your-token>",
+        "YNAB_BUDGET_ID": "<optional-budget-id>"
+      }
+    }
+  }
+}
+```
+
+For private GHCR packages, run `docker login ghcr.io` first.
 
 ## Quick Start
 

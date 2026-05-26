@@ -1,6 +1,7 @@
 import { z } from "zod";
 import * as ynab from "ynab";
 import { getErrorMessage } from "./errorUtils.js";
+import { getBudgetId } from "./budgetUtils.js";
 export const name = "ynab_update_transaction";
 export const description = "Updates an existing transaction. All fields except transactionId are optional - only provide fields you want to change.";
 export const inputSchema = {
@@ -17,13 +18,6 @@ export const inputSchema = {
     approved: z.boolean().optional().describe("Whether the transaction is approved"),
     flagColor: z.enum(["red", "orange", "yellow", "green", "blue", "purple"]).optional().describe("The transaction flag color"),
 };
-function getBudgetId(inputBudgetId) {
-    const budgetId = inputBudgetId || process.env.YNAB_BUDGET_ID || "";
-    if (!budgetId) {
-        throw new Error("No budget ID provided. Please provide a budget ID or set the YNAB_BUDGET_ID environment variable.");
-    }
-    return budgetId;
-}
 function mapClearedStatus(cleared) {
     switch (cleared) {
         case "cleared":
