@@ -70,10 +70,10 @@ Amounts returned from the raw API are in **milliunits** (divide by 1000 for doll
 A Docker image is built on every push to `main` and published to GitHub Container Registry:
 
 ```bash
-docker pull ghcr.io/calebl/ynab-mcp-server:latest
+docker pull ghcr.io/asappia/ynab-mcp-server:latest
 ```
 
-Replace `calebl` with your GitHub username or organization if you fork this repository.
+Replace `asappia` with your GitHub username or organization if you fork this repository.
 
 ### Run locally
 
@@ -95,7 +95,7 @@ docker run -i --rm -e YNAB_API_TOKEN -e YNAB_BUDGET_ID ynab-mcp-server:local
         "run", "-i", "--rm",
         "-e", "YNAB_API_TOKEN",
         "-e", "YNAB_BUDGET_ID",
-        "ghcr.io/calebl/ynab-mcp-server:latest"
+        "ghcr.io/asappia/ynab-mcp-server:latest"
       ],
       "env": {
         "YNAB_API_TOKEN": "<your-token>",
