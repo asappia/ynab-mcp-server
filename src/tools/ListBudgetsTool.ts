@@ -24,10 +24,10 @@ export async function execute(input: ListBudgetsInput, api: ynab.API) {
     }
 
     console.error("Listing budgets");
-    const budgetsResponse = await api.budgets.getBudgets(input.includeAccounts ?? false);
-    console.error(`Found ${budgetsResponse.data.budgets.length} budgets`);
+    const plansResponse = await api.plans.getPlans(input.includeAccounts ?? false);
+    console.error(`Found ${plansResponse.data.plans.length} budgets`);
 
-    const budgets = budgetsResponse.data.budgets.map((budget) => {
+    const budgets = plansResponse.data.plans.map((budget) => {
       const summary: Record<string, unknown> = {
         id: budget.id,
         name: budget.name,

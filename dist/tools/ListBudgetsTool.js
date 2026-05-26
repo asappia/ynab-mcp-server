@@ -16,9 +16,9 @@ export async function execute(input, api) {
             };
         }
         console.error("Listing budgets");
-        const budgetsResponse = await api.budgets.getBudgets(input.includeAccounts ?? false);
-        console.error(`Found ${budgetsResponse.data.budgets.length} budgets`);
-        const budgets = budgetsResponse.data.budgets.map((budget) => {
+        const plansResponse = await api.plans.getPlans(input.includeAccounts ?? false);
+        console.error(`Found ${plansResponse.data.plans.length} budgets`);
+        const budgets = plansResponse.data.plans.map((budget) => {
             const summary = {
                 id: budget.id,
                 name: budget.name,

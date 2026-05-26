@@ -28,7 +28,7 @@ export async function execute(input: UpdateCategoryInput, api: ynab.API) {
   try {
     const budgetId = getBudgetId(input.budgetId);
 
-    const category: ynab.SaveCategory = {};
+    const category: ynab.ExistingCategory = {};
     if (input.name !== undefined) category.name = input.name;
     if (input.note !== undefined) category.note = input.note;
     if (input.categoryGroupId !== undefined) category.category_group_id = input.categoryGroupId;

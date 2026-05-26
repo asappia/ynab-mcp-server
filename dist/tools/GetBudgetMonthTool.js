@@ -15,7 +15,7 @@ export async function execute(input, api) {
     try {
         const budgetId = getBudgetId(input.budgetId);
         const month = input.month || "current";
-        const response = await api.months.getBudgetMonth(budgetId, month);
+        const response = await api.months.getPlanMonth(budgetId, month);
         return {
             content: [{ type: "text", text: JSON.stringify(response.data, null, 2) }],
         };

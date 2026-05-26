@@ -8,12 +8,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [0.2.0] - 2026-05-26
 
 ### Added
-- Full coverage of YNAB JavaScript SDK v2.9.0 endpoints as MCP tools (40 tools total)
-- Read tools: user, budget export, budget settings, budget month, category, month category, account, payee, transaction, scheduled transaction, payee locations
-- Write tools: create account, update payee, update category metadata, scheduled transaction CRUD, bulk create/update transactions
+- **45 MCP tools** with full coverage of the current [YNAB OpenAPI](https://api.ynab.com) (43 REST operations) plus composite helpers
+- Built on **`ynab@^4.1.0`** (`api.plans`, `getPlanMonth`, money movements, category/payee create)
+- New tools: `ynab_create_category`, `ynab_create_category_group`, `ynab_update_category_group`, `ynab_create_payee`
+- New tools: `ynab_list_money_movements`, `ynab_list_money_movements_by_month`, `ynab_list_money_movement_groups`, `ynab_list_money_movement_groups_by_month`
+- Read/write tools for plans (budgets), accounts, categories, payees, transactions, scheduled transactions, payee locations
 - `month` filter on `ynab_get_transactions`
 - Optional `includeAccounts` on `ynab_list_budgets`
-- Shared `budgetUtils` for budget ID resolution and dollar/milliunit conversion
+- Shared `budgetUtils` and `ynabClient` (wraps `MoneyMovementsApi`)
 - Docker image published via GitHub Actions to GHCR on push to `main` and version tags
 - `.dockerignore` and multi-stage `Dockerfile`
 
@@ -23,9 +25,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Override transitive `glob` to 13.x (via `test-exclude` / Vitest coverage) to clear install deprecation warnings
 
 ### Changed
+- Upgraded from `ynab@2.9` to `ynab@4.1` (plans API naming; same UUIDs via `YNAB_BUDGET_ID`)
 - Refactored tools to use shared `getBudgetId` helper
 - GitHub Actions: Node 24–compatible action versions (`checkout@v5`, `setup-node@v5`, Docker actions v4–v7) and `FORCE_JAVASCRIPT_ACTIONS_TO_NODE24`
 - GitHub Actions test workflow: install with `--ignore-scripts`, explicit build step, coverage upload on Node 22.x
+- `ynab_create_account` limited to account types supported by the create-account API
 
 ## [0.1.2] - 2024-03-26
 

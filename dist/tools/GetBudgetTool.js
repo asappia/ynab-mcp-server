@@ -13,7 +13,7 @@ export const inputSchema = {
 export async function execute(input, api) {
     try {
         const budgetId = getBudgetId(input.budgetId);
-        const response = await api.budgets.getBudgetById(budgetId, input.lastKnowledgeOfServer);
+        const response = await api.plans.getPlanById(budgetId, input.lastKnowledgeOfServer);
         return {
             content: [{ type: "text", text: JSON.stringify(response.data, null, 2) }],
         };

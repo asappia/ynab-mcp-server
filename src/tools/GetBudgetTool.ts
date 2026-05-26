@@ -22,7 +22,7 @@ interface GetBudgetInput {
 export async function execute(input: GetBudgetInput, api: ynab.API) {
   try {
     const budgetId = getBudgetId(input.budgetId);
-    const response = await api.budgets.getBudgetById(
+    const response = await api.plans.getPlanById(
       budgetId,
       input.lastKnowledgeOfServer
     );
