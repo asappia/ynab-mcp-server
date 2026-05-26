@@ -22,6 +22,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 - Refactored tools to use shared `getBudgetId` helper
+- GitHub Actions: Node 24–compatible action versions (`checkout@v5`, `setup-node@v5`, Docker actions v4–v7) and `FORCE_JAVASCRIPT_ACTIONS_TO_NODE24`
 - GitHub Actions test workflow: install with `--ignore-scripts`, explicit build step, coverage upload on Node 22.x
 
 ## [0.1.2] - 2024-03-26
